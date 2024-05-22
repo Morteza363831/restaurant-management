@@ -1,6 +1,7 @@
 package com.restaurantManagement.services;
 
 import com.restaurantManagement.models.User;
+import com.restaurantManagement.models.UserData;
 
 import java.sql.SQLException;
 
@@ -14,5 +15,5 @@ public interface UserService {
 
     public void updateUser(User user) throws SQLException;
 
-
+    public UserData getData();
 }

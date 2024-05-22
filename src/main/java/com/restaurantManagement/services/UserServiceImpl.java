@@ -30,5 +30,8 @@ public class UserServiceImpl implements UserService{
         userData.updateUser(user);
     }
 
-
+    @Override
+    public UserData getData() {
+        return userData;
+    }
 }
