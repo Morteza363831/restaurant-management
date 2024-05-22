@@ -2,6 +2,7 @@ package com.restaurantManagement.models;
 
 import com.restaurantManagement.dao.DatabaseConnection;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
+@Slf4j
 public class UserData {
 
     // make connection to sql
@@ -16,7 +18,7 @@ public class UserData {
     //private static int idValue= 10000;
 
     // list of all users
-    private final List<User> userData = new ArrayList<>();
+    public final List<User> userData = new ArrayList<>();
 
 
     // constructor --> get all users at first
@@ -24,7 +26,7 @@ public class UserData {
         try {
             connection = DatabaseConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
-            ResultSet resultSet = preparedStatement.getResultSet();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 String fname = resultSet.getString("fname");
                 String lname = resultSet.getString("lname");
@@ -44,7 +46,7 @@ public class UserData {
         Random random = new Random();
         boolean flag = true;
         PreparedStatement preparedStatement = connection.prepareStatement("select userId from users");
-        ResultSet resultSet = preparedStatement.getResultSet();
+        ResultSet resultSet = preparedStatement.executeQuery();
         int idValue = 10000;
         while(flag) {
             idValue = 10000 + random.nextInt(90000);

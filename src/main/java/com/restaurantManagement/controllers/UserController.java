@@ -1,5 +1,6 @@
 package com.restaurantManagement.controllers;
 
+import com.restaurantManagement.models.User;
 import com.restaurantManagement.models.UserData;
 import com.restaurantManagement.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ModelAttribute("userData")
+    @ModelAttribute("users")
     public UserData userData() {
-        return userService.getData();
+        UserData userData = userService.getData();
+        return userData;
     }
 
     // http://locahost:8080/restaurant-management/users
