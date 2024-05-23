@@ -17,9 +17,6 @@ public class UserData {
     // list of all users
     public final List<User> userData = new ArrayList<>();
 
-    private String dd = "me";
-
-
     // constructor --> get all users at first
     public UserData() {
         try {
@@ -88,7 +85,7 @@ public class UserData {
             if (item.getUserId() == userId) {
                 // delete user in users table
                 Statement statement = connection.createStatement();
-                statement.execute("delete from userId where userId = ''"+ userId + "''");
+                statement.execute("delete from users where userId = ''"+ userId + "''");
                 statement.close();
                 itemListIterator.remove();
                 break;
