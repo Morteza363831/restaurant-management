@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserData userData = new UserData();
     @Override
-    public void addItem(User user) throws SQLException {
+    public void addUser(User user) throws SQLException {
         userData.addUser(user);
     }
 
@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUser(String userId) {
-        return userData.getUser(userId);
+    public User getUser(String phone,String password) {
+        return userData.getUser(phone,password);
     }
 
     @Override

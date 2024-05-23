@@ -5,26 +5,25 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 public class UserData {
 
     // make connection to sql
-    Connection connection;
+    public Connection connection = DatabaseConnection.getConnection();
     //private static int idValue= 10000;
 
     // list of all users
     public final List<User> userData = new ArrayList<>();
 
+    private String dd = "me";
+
 
     // constructor --> get all users at first
     public UserData() {
         try {
-            connection = DatabaseConnection.getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
@@ -41,21 +40,41 @@ public class UserData {
             throw new RuntimeException(e);
         }
     }
+
     public void addUser(User addUser) throws SQLException {
         // make unique id for each user
         Random random = new Random();
         boolean flag = true;
-        PreparedStatement preparedStatement = connection.prepareStatement("select userId from users");
-        ResultSet resultSet = preparedStatement.executeQuery();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select userId from users");
+        List<String> usersId = new ArrayList<>();
+        while(resultSet.next()) {
+            usersId.add(resultSet.getString("userId"));
+        }
         int idValue = 10000;
         while(flag) {
-            idValue = 10000 + random.nextInt(90000);
-            if ((idValue+"") != resultSet.getString("userId")) {
-                flag = false;
+            for (String userId : usersId) {
+                System.out.println("here");
+                idValue = 10000 + random.nextInt(90000);
+                if (!(idValue+"").equals(userId)) {
+                    // add user to sql
+                    PreparedStatement preparedStatement = connection.prepareStatement("insert into users (userId,fname,lname,password,email,phone) values (?,?,?,?,?,?)");
+                    preparedStatement.setString(1,idValue+"");
+                    preparedStatement.setString(2,addUser.getFname());
+                    preparedStatement.setString(3,addUser.getLname());
+                    preparedStatement.setString(4,addUser.getPassword());
+                    preparedStatement.setString(5,addUser.getEmail());
+                    preparedStatement.setString(6,addUser.getPhone());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
+                    flag = false;
+                    break;
+                }
             }
+
         }
         resultSet.close();
-        preparedStatement.close();
+        statement.close();
         // creating has been finished here
         // add user to list
         addUser.setUserId(idValue+"");
@@ -77,10 +96,10 @@ public class UserData {
         }
     }
 
-    public User getUser(String userId) {
-        for (User item : userData) {
-            if (item.getUserId() == userId) {
-                return item;
+    public User getUser(String phone,String password) {
+        for (User user : userData) {
+            if (user.getPhone().equals(phone) && user.getPassword().equals(password)) {
+                return user;
             }
         }
         return null;
