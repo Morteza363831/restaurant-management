@@ -49,12 +49,17 @@
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password">
         </div>
-        <button type="submit" class="btn btn-primary animate">Update Profile</button>
-    </form>
+        <button type="submit" class="btn btn-primary animate mr-2">Update Profile</button>
 
-    <div class="mt-4">
-        <a href="${pageContext.request.contextPath}/restaurants" class="btn btn-secondary animate">Back to Restaurant List</a>
-    </div>
+        <a href="${pageContext.request.contextPath}/profile" class="btn btn-warning mr-2">
+            <i class="fas fa-undo"></i> Discard Changes
+        </a>
+
+        <!-- Back to Restaurant List button -->
+        <a href="${pageContext.request.contextPath}/restaurants" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Restaurants
+        </a>
+    </form>
 
 </div>
 </body>

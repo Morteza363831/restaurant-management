@@ -72,6 +72,7 @@
             </a>
             <a href="${pageContext.request.contextPath}/deleteAccount" class="btn btn-danger">
                 <i class="fas fa-trash"></i> Delete Account
+            </a>
         </div>
     </div>
 </div>
