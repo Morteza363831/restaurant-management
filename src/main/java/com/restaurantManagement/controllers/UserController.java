@@ -6,10 +6,12 @@ import com.restaurantManagement.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,12 +27,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ModelAttribute("test")
-    public String test() {
-        UserData userData = userService.getData();
-        String fname = userData.userData.get(0).getFname();
-        return fname;
-    }
     @ModelAttribute("users")
     public List<User> userData() {
 
@@ -69,12 +65,13 @@ public class UserController {
     }
 
     @PostMapping("getUser")
-    public String getUser(@ModelAttribute("user") User getUser) {
+    public String getUser(@ModelAttribute("user") User getUser, HttpSession session) {
         User user = userService.getUser(getUser.getPhone(),getUser.getPassword());
         if (user == null) {
             return "redirect:/signIn";
         }
-        return "redirect:/restaurants";
+        session.setAttribute("signedInUser",user);
+        return "redirect:/restaurant-list";
     }
 
 }
