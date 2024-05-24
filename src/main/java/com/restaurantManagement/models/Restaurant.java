@@ -14,11 +14,17 @@ public class Restaurant {
     private String restName;
     @NonNull
     private String restAddress;
+    @NonNull
+    private String restDescription;
+    @NonNull
+    private String restImg;
 
     // constructors
-    public Restaurant(String restName, String restAddress) {
+    public Restaurant(String restName, String restAddress,String restDescription, String restImg) {
         this.restName = restName;
         this.restAddress = restAddress;
+        this.restDescription = restDescription;
+        this.restImg = restImg;
     }
 
 }

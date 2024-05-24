@@ -11,10 +11,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven />
 
 
-    <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
             <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />

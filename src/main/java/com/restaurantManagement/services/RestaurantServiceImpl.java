@@ -2,9 +2,11 @@ package com.restaurantManagement.services;
 
 import com.restaurantManagement.models.Restaurant;
 import com.restaurantManagement.models.RestaurantData;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
+@Service
 public class RestaurantServiceImpl implements RestaurantService{
 
     private final RestaurantData restaurantData = new RestaurantData();

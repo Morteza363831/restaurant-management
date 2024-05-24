@@ -4,40 +4,42 @@
 <html>
 <head>
     <title>signUp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-    <body>
-        <h1 align="center">sign up</h1>
-        <br>
-        <br>
-        <div align="center">
-
-            <form:form action="${pageContext.request.contextPath}/addUser" method="post" modelAttribute="user">
-                <label>first name :</label>
-                <br>
-                <form:input path="fname"></form:input>
-                <br>
-                <label>last name :</label>
-                <br>
-                <form:input path="lname"></form:input>
-                <br>
-                <label>password :</label>
-                <br>
-                <form:input path="password"></form:input>
-                <br>
-                <label>email :</label>
-                <br>
-                <form:input path="email"></form:input>
-                <br>
-                <label>phone number :</label>
-                <br>
-                <form:input path="phone"></form:input>
-                <br>
-                <input type="submit" value="SIGN UP">
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Sign Up</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form:form action="${pageContext.request.contextPath}/addUser" method="post" modelAttribute="user" class="bg-light p-4 rounded shadow">
+                <div class="form-group">
+                    <label for="fname">First Name:</label>
+                    <form:input path="fname" id="fname" class="form-control"></form:input>
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last Name:</label>
+                    <form:input path="lname" id="lname" class="form-control"></form:input>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <form:input path="password" id="password" type="password" class="form-control"></form:input>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <form:input path="email" id="email" class="form-control"></form:input>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <form:input path="phone" id="phone" class="form-control"></form:input>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
             </form:form>
-
         </div>
-
-    </body>
+    </div>
+</div>
+</body>
 
 </html>

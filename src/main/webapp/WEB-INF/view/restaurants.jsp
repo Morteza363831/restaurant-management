@@ -8,20 +8,59 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Restaurant List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        body {
+            padding-top: 70px; /* Add padding to the top of the body to avoid content being hidden by the fixed navbar */
+        }
+        .fa-shopping-cart {
+            font-size: 24px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="#">Restaurant Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav d-flex justify-content-around align-items-center">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Restaurants</a>
+                </li>
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="profile.jsp">Profile</a>
+                </li>
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <a href="cart.html" class="text-white"><i class="fas fa-shopping-cart fa-lg"></i></a>
+    </div>
+</nav>
+
+
+
 <div class="container my-5">
     <h1 class="mb-4">Restaurant List</h1>
 
-    <div class="row">
-        <sql:query var="restaurants" dataSource="jdbc/myDataSource">
-            SELECT * FROM restaurants
-        </sql:query>
-
-        <c:forEach var="restaurant" items="${restaurants}">
-            <div class="col-md-4 mb-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+        <c:forEach var="restaurant" items="${restaurants}" begin="0" end="2">
+            <div class="col">
                 <div class="card h-100">
-                    <img src="/resources/images/image1.jpg" class="card-img-top" alt="Restaurant Image">
+                    <img src="${pageContext.request.contextPath}/resources/images/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
                     <div class="card-body">
                         <h5 class="card-title"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text"><c:out value="${restaurant.restDescription}"/></p>
@@ -34,14 +73,23 @@
             </div>
         </c:forEach>
     </div>
-</div>
 
-<div class="navbar fixed-bottom bg-light py-3">
-    <div class="container">
-        <a href="profile.jsp" class="btn btn-outline-primary">Profile</a>
-        <a href="#" class="btn btn-outline-primary">Link 1</a>
-        <a href="#" class="btn btn-outline-primary">Link 2</a>
-        <a href="#" class="btn btn-outline-primary">Link 3</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <c:forEach var="restaurant" items="${restaurants}" begin="3">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${pageContext.request.contextPath}/resources/images/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${restaurant.restName}"/></h5>
+                        <p class="card-text"><c:out value="${restaurant.restDescription}"/></p>
+                        <form action="${pageContext.request.contextPath}/getRestaurant" method="post">
+                            <input type="hidden" name="restaurantId" value="${restaurant.restName}">
+                            <button type="submit" class="btn btn-primary">View Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
     </div>
 </div>
 </body>

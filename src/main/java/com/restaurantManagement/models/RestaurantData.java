@@ -24,7 +24,9 @@ public class RestaurantData {
             while(resultSet.next()) {
                 String restName = resultSet.getString("restName");
                 String restAddress = resultSet.getString("restAddress");
-                restaurantData.add(new Restaurant(restName,restAddress));
+                String restDescription = resultSet.getString("restDescription");
+                String restImg = resultSet.getString("restImg");
+                restaurantData.add(new Restaurant(restName,restAddress,restDescription,restImg));
             }
             resultSet.close();
             preparedStatement.close();
@@ -50,10 +52,12 @@ public class RestaurantData {
                 idValue = 10000 + random.nextInt(90000);
                 if (!(idValue+"").equals(restId)) {
                     // add restaurant to sql
-                    PreparedStatement preparedStatement = connection.prepareStatement("insert into restaurants (restId,restName,restAddress) values (?,?,?)");
+                    PreparedStatement preparedStatement = connection.prepareStatement("insert into restaurants (restId,restName,restAddress,restDescription,restImg) values (?,?,?,?,?)");
                     preparedStatement.setString(1,idValue+"");
                     preparedStatement.setString(2,addRestaurant.getRestName());
                     preparedStatement.setString(3,addRestaurant.getRestAddress());
+                    preparedStatement.setString(4,addRestaurant.getRestDescription());
+                    preparedStatement.setString(5,addRestaurant.getRestImg());
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
                     flag = false;
