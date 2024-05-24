@@ -23,7 +23,8 @@ public class User {
     private String phone;
 
     // constructors
-    public User(String fname, String lname, String password, String email, String phone) {
+    public User(String userId, String fname, String lname, String password, String email, String phone) {
+        this.userId = userId;
         this.fname = fname;
         this.lname = lname;
         this.password = password;

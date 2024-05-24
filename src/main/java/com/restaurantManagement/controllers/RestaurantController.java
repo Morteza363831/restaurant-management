@@ -61,7 +61,7 @@ public class RestaurantController {
     public String deleteAccount(HttpSession session) throws SQLException {
         User user = (User) session.getAttribute("signedInUser");
         session.removeAttribute("signedInUser");
-        userService.remvoeUser(user.getPhone(),user.getPassword());
+        userService.remvoeUser(user.getUserId());
         return "redirect:/signIn";
     }
 
@@ -80,7 +80,7 @@ public class RestaurantController {
 
     @ModelAttribute("updatedUser")
     public User information() {
-        return new User("","","","","");
+        return new User("","","","","","");
     }
 
 

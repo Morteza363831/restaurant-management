@@ -70,7 +70,7 @@
                         <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>
                         <form action="${pageContext.request.contextPath}/getRestaurant" method="post">
-                            <input type="hidden" name="restaurantId" value="${restaurant.restName}">
+                            <input type="hidden" name="restaurantId" value="${restaurant.restId}">
                             <button type="submit" class="btn btn-primary animate">View Details</button>
                         </form>
                     </div>
@@ -88,7 +88,7 @@
                         <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>
                         <form action="${pageContext.request.contextPath}/getRestaurant" method="post">
-                            <input type="hidden" name="restaurantId" value="${restaurant.restName}">
+                            <input type="hidden" name="restaurantId" value="${restaurant.restId}">
                             <button type="submit" class="btn btn-primary animate">View Details</button>
                         </form>
                     </div>

@@ -24,12 +24,13 @@ public class UserData {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
+                String userId = resultSet.getString("userId");
                 String fname = resultSet.getString("fname");
                 String lname = resultSet.getString("lname");
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
-                userData.add(new User(fname,lname,password,email,phone));
+                userData.add(new User(userId,fname,lname,password,email,phone));
             }
             resultSet.close();
             preparedStatement.close();
@@ -38,7 +39,7 @@ public class UserData {
         }
     }
 
-    public void addUser(User addUser) throws SQLException {
+    public void addUser(@NonNull User addUser) throws SQLException {
         // make unique id for each user
         Random random = new Random();
         boolean flag = true;
@@ -51,7 +52,6 @@ public class UserData {
         int idValue = 10000;
         while(flag) {
             for (String userId : usersId) {
-                System.out.println("here");
                 idValue = 10000 + random.nextInt(90000);
                 if (!(idValue+"").equals(userId)) {
                     // add user to sql
@@ -78,15 +78,14 @@ public class UserData {
         userData.add(addUser);
     }
 
-    public void removeUser(String phone,String password) throws SQLException {
+    public void removeUser(String userId) throws SQLException {
         ListIterator<User> itemListIterator = userData.listIterator();
         while (itemListIterator.hasNext()) {
             User item = itemListIterator.next();
-            if (item.getPhone() == phone && item.getPassword() == password) {
+            if (item.getUserId().equals(userId)) {
                 // delete user in users table
-                PreparedStatement preparedStatement = connection.prepareStatement("delete  from users where phone = ? and password = ?");
-                preparedStatement.setString(1,phone);
-                preparedStatement.setString(2,password);
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from users where userId = ?");
+                preparedStatement.setString(1,userId);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
                 itemListIterator.remove();
@@ -115,12 +114,12 @@ public class UserData {
                 String fname = updataUser.getFname();
                 String lname = updataUser.getLname();
                 String password = updataUser.getPassword();
-                String phone = updataUser.getPhone();
-                PreparedStatement preparedStatement = connection.prepareStatement("update users set fname = ?, lname = ?, password = ? where phone = ?");
+                String userId = updataUser.getUserId();
+                PreparedStatement preparedStatement = connection.prepareStatement("update users set fname = ?, lname = ?, password = ? where userId = ?");
                 preparedStatement.setString(1,fname);
                 preparedStatement.setString(2,lname);
                 preparedStatement.setString(3,password);
-                preparedStatement.setString(4,phone);
+                preparedStatement.setString(4,userId);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
                 itemListIterator.set(updataUser);

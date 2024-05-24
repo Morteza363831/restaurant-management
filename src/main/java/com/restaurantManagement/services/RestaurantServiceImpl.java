@@ -16,13 +16,13 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public void remvoeRestaurant(String restName) throws SQLException {
-        restaurantData.removeRestaurant(restName);
+    public void remvoeRestaurant(String restId) throws SQLException {
+        restaurantData.removeRestaurant(restId);
     }
 
     @Override
-    public Restaurant getRestaurant(String restName) {
-        return restaurantData.getRestaurant(restName);
+    public Restaurant getRestaurant(String restId) {
+        return restaurantData.getRestaurant(restId);
     }
 
     @Override

@@ -20,7 +20,8 @@ public class Restaurant {
     private String restImg;
 
     // constructors
-    public Restaurant(String restName, String restAddress,String restDescription, String restImg) {
+    public Restaurant(String restId, String restName, String restAddress,String restDescription, String restImg) {
+        this.restId = restId;
         this.restName = restName;
         this.restAddress = restAddress;
         this.restDescription = restDescription;

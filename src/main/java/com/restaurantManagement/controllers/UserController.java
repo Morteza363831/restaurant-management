@@ -44,7 +44,7 @@ public class UserController {
     // adding user to sql --> (sign up page)
     @ModelAttribute("user")
     public User user() {
-        return new User("","","","","");
+        return new User("","","","","","");
     }
     @GetMapping("signUp")
     public String signUp() {
