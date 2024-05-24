@@ -54,7 +54,7 @@ public class UserController {
     public String addUser(@ModelAttribute("user") User addUser) throws SQLException {
         userService.addUser(addUser);
 
-        return "redirect:/users";
+        return "redirect:/signIn";
     }
 
 
@@ -71,7 +71,7 @@ public class UserController {
             return "redirect:/signIn";
         }
         session.setAttribute("signedInUser",user);
-        return "redirect:/restaurant-list";
+        return "redirect:/restaurants";
     }
 
 

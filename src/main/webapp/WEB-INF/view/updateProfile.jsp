@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -52,8 +53,9 @@
     </form>
 
     <div class="mt-4">
-        <a href="${pageContext.request.contextPath}/restaurant-list" class="btn btn-secondary animate">Back to Restaurant List</a>
+        <a href="${pageContext.request.contextPath}/restaurants" class="btn btn-secondary animate">Back to Restaurant List</a>
     </div>
+
 </div>
 </body>
 </html>

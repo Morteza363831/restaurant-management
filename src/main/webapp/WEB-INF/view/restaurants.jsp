@@ -65,7 +65,7 @@
         <c:forEach var="restaurant" items="${restaurants}" begin="0" end="2">
             <div class="col animate">
                 <div class="card h-100">
-                    <img src="${pageContext.request.contextPath}/resources/images/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
+                    <img src="${pageContext.request.contextPath}/resources/images/restaurants/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
                     <div class="card-body">
                         <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>
@@ -83,7 +83,7 @@
         <c:forEach var="restaurant" items="${restaurants}" begin="3">
             <div class="col animate">
                 <div class="card h-100">
-                    <img src="${pageContext.request.contextPath}/resources/images/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
+                    <img src="${pageContext.request.contextPath}/resources/images/restaurants/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
                     <div class="card-body">
                         <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>

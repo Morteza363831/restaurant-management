@@ -35,7 +35,7 @@ public class RestaurantController {
     }
 
 
-    @GetMapping("restaurant-list")
+    @GetMapping("restaurants")
     public String restaurant_list(Model model, HttpSession session) {
 
         User user = (User) session.getAttribute("signedInUser");
@@ -57,10 +57,23 @@ public class RestaurantController {
         return "profile";
     }
 
-    @GetMapping("update-profile")
+    @GetMapping("deleteAccount")
+    public String deleteAccount(HttpSession session) throws SQLException {
+        User user = (User) session.getAttribute("signedInUser");
+        session.removeAttribute("signedInUser");
+        userService.remvoeUser(user.getPhone(),user.getPassword());
+        return "redirect:/signIn";
+    }
+
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/signIn";
+    }
+
+    @GetMapping("profile/update")
     public String updateProfile(Model model, HttpSession session) {
         User user = (User) session.getAttribute("signedInUser");
-
         model.addAttribute("user",user);
         return "updateProfile";
     }
@@ -77,11 +90,13 @@ public class RestaurantController {
         user.setFname(updatedUser.getFname());
         user.setLname(updatedUser.getLname());
         if (!updatedUser.getPassword().equals("") && updatedUser.getPassword() != null) {
-            user.setPassword(user.getPassword());
+            user.setPassword(updatedUser.getPassword());
         }
         userService.updateUser(user);
         session.removeAttribute("signedInUser");
         session.setAttribute("signedInUser",user);
         return "redirect:/profile";
     }
+
+
 }

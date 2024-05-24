@@ -78,15 +78,17 @@ public class UserData {
         userData.add(addUser);
     }
 
-    public void removeUser(String userId) throws SQLException {
+    public void removeUser(String phone,String password) throws SQLException {
         ListIterator<User> itemListIterator = userData.listIterator();
         while (itemListIterator.hasNext()) {
             User item = itemListIterator.next();
-            if (item.getUserId() == userId) {
+            if (item.getPhone() == phone && item.getPassword() == password) {
                 // delete user in users table
-                Statement statement = connection.createStatement();
-                statement.execute("delete from users where userId = ''"+ userId + "''");
-                statement.close();
+                PreparedStatement preparedStatement = connection.prepareStatement("delete  from users where phone = ? and password = ?");
+                preparedStatement.setString(1,phone);
+                preparedStatement.setString(2,password);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
                 itemListIterator.remove();
                 break;
             }

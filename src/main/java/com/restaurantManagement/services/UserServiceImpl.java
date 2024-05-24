@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void remvoeUser(String userId) throws SQLException {
-        userData.removeUser(userId);
+    public void remvoeUser(String phone, String password) throws SQLException {
+        userData.removeUser(phone,password);
     }
 
     @Override

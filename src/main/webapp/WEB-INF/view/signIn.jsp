@@ -201,8 +201,6 @@
     </style>
 </head>
 <body>
-
-
 <form:form action="${pageContext.request.contextPath}/getUser" method="post" modelAttribute="user" class="bg-light p-5 rounded shadow div-1">
     <h1 class="text-center mb-4">Sign In</h1>
     <div class="form-group">
@@ -216,8 +214,10 @@
     <div class="text-center">
         <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
     </div>
+    <div class="text-center mt-3">
+        <p>Don't have an account? <a href="${pageContext.request.contextPath}/signUp" class="btn btn-link">Sign Up</a></p>
+    </div>
 </form:form>
-
 
 <div class="div-2">
     <div class="plate"></div>

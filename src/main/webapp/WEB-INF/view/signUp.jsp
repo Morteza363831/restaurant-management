@@ -3,15 +3,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>signUp</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .animate {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-
 <body>
 <div class="container my-5">
-    <h1 class="text-center mb-4">Sign Up</h1>
+    <h1 class="text-center mb-4 animate">Sign Up</h1>
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6 animate">
             <form:form action="${pageContext.request.contextPath}/addUser" method="post" modelAttribute="user" class="bg-light p-4 rounded shadow">
                 <div class="form-group">
                     <label for="fname">First Name:</label>
@@ -41,5 +64,4 @@
     </div>
 </div>
 </body>
-
 </html>

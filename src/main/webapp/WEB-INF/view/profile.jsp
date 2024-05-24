@@ -31,6 +31,11 @@
             font-size: 24px;
             margin-right: 10px;
         }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +63,15 @@
                     <p>${user.phone}</p>
                 </div>
             </div>
-            <a href="update-profile" class="btn btn-primary"><i class="fas fa-edit"></i>Make Changes</a>
+            <a href="${pageContext.request.contextPath}/profile/update" class="btn btn-primary"><i class="fas fa-edit"></i>Make Changes</a>
+            <a href="${pageContext.request.contextPath}/restaurants" class="btn btn-secondary back-button">
+                <i class="fas fa-arrow-left"></i> Back to Restaurants
+            </a>
+            <a href="logout" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <a href="${pageContext.request.contextPath}/deleteAccount" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete Account
         </div>
     </div>
 </div>
