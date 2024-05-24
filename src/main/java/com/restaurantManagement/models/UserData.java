@@ -110,10 +110,17 @@ public class UserData {
 
             if (item.equals(updataUser)) {
                 // user can update his password
+                String fname = updataUser.getFname();
+                String lname = updataUser.getLname();
                 String password = updataUser.getPassword();
-                Statement statement = connection.createStatement();
-                statement.execute("update users set password = '" + password + "'");
-                statement.close();
+                String phone = updataUser.getPhone();
+                PreparedStatement preparedStatement = connection.prepareStatement("update users set fname = ?, lname = ?, password = ? where phone = ?");
+                preparedStatement.setString(1,fname);
+                preparedStatement.setString(2,lname);
+                preparedStatement.setString(3,password);
+                preparedStatement.setString(4,phone);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
                 itemListIterator.set(updataUser);
                 break;
             }

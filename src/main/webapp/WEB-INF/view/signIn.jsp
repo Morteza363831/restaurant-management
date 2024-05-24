@@ -6,7 +6,7 @@
     <title>Sign In</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{
+        body {
             color: #212529;
             background-color: #E9ECEF;
             font-family: 'Times New Roman', Times, serif;
@@ -17,24 +17,25 @@
             text-align: center;
         }
 
-        .div-1{
+        .div-1 {
             padding: 10vw;
+            animation: fadeInRight 1s ease-in-out;
         }
 
-        .div-2{
+        .div-2 {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-left: 5vw;
-
+            animation: fadeInLeft 1s ease-in-out;
         }
 
-        .cup{
+        .cup {
             position: relative;
             width: 15vw;
             height: 40vh;
-            background: linear-gradient(to right , #F8F9FA , #CED4DA);
+            background: linear-gradient(to right, #F8F9FA, #CED4DA);
             margin-left: 2vw;
             border-bottom-left-radius: 38%;
             border-bottom-right-radius: 38%;
@@ -43,12 +44,10 @@
             text-align: center;
             justify-content: center;
             color: #F8F9FA;
-
+            animation: fadeInLeft 1s ease-in-out;
         }
 
-
-
-        .cup:hover{
+        .cup:hover {
             display: flex;
             align-items: center;
             text-align: center;
@@ -57,24 +56,24 @@
             color: #c57e65;
         }
 
-        .top{
+        .top {
             position: absolute;
             top: -4vh;
             width: 15vw;
             height: 8vh;
-            background: linear-gradient(to right , #F8F9FA , #CED4DA);
+            background: linear-gradient(to right, #F8F9FA, #CED4DA);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .circle{
+        .circle {
             position: absolute;
             top: 1vh;
             width: 14vw;
             height: 6vh;
-            background: linear-gradient(to left , #F8F9FA , #CED4DA);
+            background: linear-gradient(to left, #F8F9FA, #CED4DA);
             background-color: #000000;
             border-radius: 50%;
             display: flex;
@@ -82,17 +81,16 @@
             overflow: hidden;
         }
 
-        .tea{
+        .tea {
             position: absolute;
             top: 2.8vh;
             width: 100%;
             height: 100%;
-            background: linear-gradient(#c57e65 , #e28462);
+            background: linear-gradient(#c57e65, #e28462);
             border-radius: 50%;
-
         }
 
-        .handle{
+        .handle {
             position: absolute;
             width: 5vw;
             height: 16vh;
@@ -103,23 +101,21 @@
             transform: rotate(35deg);
             margin-left: 14vw;
             margin-top: 32vh;
-
-
         }
 
-        .plate{
+        .plate {
             position: absolute;
             transform: translateX(-50%);
             width: 25vw;
             height: 18vh;
-            background: linear-gradient(to right , #F8F9FA , #CED4DA);
+            background: linear-gradient(to right, #F8F9FA, #CED4DA);
             border-radius: 50%;
             margin-left: 27vw;
             margin-top: 36vh;
             box-shadow: 0 35px 35px rgba(0, 0, 0, 0.2);
         }
 
-        .plate::before{
+        .plate::before {
             content: "";
             position: absolute;
             top: 0.5vw;
@@ -127,26 +123,27 @@
             right: 0.5vw;
             bottom: 0.5vw;
             border-radius: 50%;
-            background: linear-gradient(to left , #F8F9FA , #CED4DA);
-
+            background: linear-gradient(to left, #F8F9FA, #CED4DA);
         }
 
-        .plate::after{
+        .plate::after {
             content: "";
             position: absolute;
             top: 40px;
             left: 30px;
             right: 30px;
             bottom: 25px;
-            background: radial-gradient(rgba(0 , 0 , 0 , 0.2) 25% , transparent , transparent);
+            background: radial-gradient(rgba(0, 0, 0, 0.2) 25%, transparent, transparent);
             border-radius: 50%;
         }
-        .vapour{
+
+        .vapour {
             position: relative;
             display: flex;
             z-index: 1;
         }
-        .vapour span{
+
+        .vapour span {
             position: relative;
             bottom: 10px;
             display: block;
@@ -159,29 +156,46 @@
             opacity: 0;
             filter: blur(3px);
             animation-delay: calc(var(--i) * -0.5s);
-
         }
+
         @keyframes animate {
-            0%
-            {
+            0% {
                 transform: translateY(0) scaleX(1);
                 opacity: 0;
             }
-            15%
-            {
+            15% {
                 opacity: 1;
             }
-            50%
-            {
+            50% {
                 transform: translateY(-80px) scaleX(5);
             }
-            95%
-            {
+            95% {
                 opacity: 0;
             }
-            100%
-            {
+            100% {
                 transform: translateY(-160px) scaleX(10);
+            }
+        }
+
+        @keyframes fadeInRight {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
     </style>
