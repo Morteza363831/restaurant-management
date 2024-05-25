@@ -17,11 +17,14 @@ public class Menu {
     private String foodName;
     @NonNull
     private int foodPrice;
+    @NonNull
+    private String foodImg;
 
-    public Menu(String foodId, String restId, String foodName,int foodPrice) {
+    public Menu(String foodId, String restId, String foodName,int foodPrice, String foodImg) {
         this.foodId = foodId;
         this.restId = restId;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
+        this.foodImg = foodImg;
     }
 }

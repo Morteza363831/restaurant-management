@@ -92,7 +92,7 @@ public class RestaurantData {
 
     public Restaurant getRestaurant(String restId) {
         for (Restaurant restaurant : restaurantData) {
-            if (restaurant.getRestId().equals(restId)) {
+            if (restId.equals(restaurant.getRestId())) {
                 return restaurant;
             }
         }

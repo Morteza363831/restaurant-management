@@ -25,7 +25,8 @@ public class MenuData {
                 String restId = resultSet.getString("restId");
                 String foodName = resultSet.getString("name");
                 int foodPrice = Integer.parseInt(resultSet.getString("price"));
-                menuData.add(new Menu(foodId,restId,foodName,foodPrice));
+                String foodImg = resultSet.getString("foodImg");
+                menuData.add(new Menu(foodId,restId,foodName,foodPrice,foodImg));
             }
             resultSet.close();
             preparedStatement.close();
@@ -94,5 +95,25 @@ public class MenuData {
             }
         }
         return null;
+    }
+
+    public List<Menu> getFoods(String restId) throws SQLException {
+        List<Menu> items = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from menu where restId = ?");
+        preparedStatement.setString(1,restId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while(resultSet.next()) {
+            String foodId = resultSet.getString("foodId");
+            String foodName = resultSet.getString("name");
+            int foodPrice = Integer.parseInt(resultSet.getString("price"));
+            String foodImg = resultSet.getString("foodImg");
+            items.add(new Menu(foodId,restId,foodName,foodPrice,foodImg));
+        }
+
+        if(items.isEmpty()) {
+            return  null;
+        }
+        return items;
     }
 }

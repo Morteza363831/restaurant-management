@@ -12,9 +12,9 @@ public interface RestaurantService {
 
     public void addRestaurant(Restaurant restaurant) throws SQLException;
 
-    public void remvoeRestaurant(@NonNull String restId) throws SQLException;
+    public void remvoeRestaurant(String restId) throws SQLException;
 
-    public Restaurant getRestaurant(@NonNull String restId);
+    public Restaurant getRestaurant(String restId);
 
     public RestaurantData getData();
 }

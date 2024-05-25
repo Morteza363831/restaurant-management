@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE>
 <html>
@@ -28,6 +28,22 @@
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(-20px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-body form {
+            margin-top: auto;
         }
     </style>
 </head>
@@ -62,33 +78,15 @@
     <h1 class="mb-4 animate">Restaurant List</h1>
 
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-        <c:forEach var="restaurant" items="${restaurants}" begin="0" end="2">
-            <div class="col animate">
+        <c:forEach var="restaurant" items="${restaurants}" begin="0">
+            <div class="col animate mb-4">
                 <div class="card h-100">
                     <img src="${pageContext.request.contextPath}/resources/images/restaurants/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
                     <div class="card-body">
                         <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
                         <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>
                         <form action="${pageContext.request.contextPath}/getRestaurant" method="post">
-                            <input type="hidden" name="restaurantId" value="${restaurant.restId}">
-                            <button type="submit" class="btn btn-primary animate">View Details</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <c:forEach var="restaurant" items="${restaurants}" begin="3">
-            <div class="col animate">
-                <div class="card h-100">
-                    <img src="${pageContext.request.contextPath}/resources/images/restaurants/<c:out value="${restaurant.restImg}"/>" class="card-img-top" alt="Restaurant Image">
-                    <div class="card-body">
-                        <h5 class="card-title animate"><c:out value="${restaurant.restName}"/></h5>
-                        <p class="card-text animate"><c:out value="${restaurant.restDescription}"/></p>
-                        <form action="${pageContext.request.contextPath}/getRestaurant" method="post">
-                            <input type="hidden" name="restaurantId" value="${restaurant.restId}">
+                            <input type="hidden" name="restId" value="${restaurant.restId}">
                             <button type="submit" class="btn btn-primary animate">View Details</button>
                         </form>
                     </div>

@@ -44,9 +44,15 @@ public class RestaurantController {
         return "restaurants";
     }
 
+    @ModelAttribute("restaurant")
+    public Restaurant restaurant() {
+        return new Restaurant("","","","","");
+    }
+
     @PostMapping("getRestaurant")
-    public String getRestaurant(@ModelAttribute("restaurant") Restaurant getRestaurant) {
-        Restaurant restaurant = restaurantService.getRestaurant(getRestaurant.getRestName());
+    public String getRestaurant(@ModelAttribute("restaurant") Restaurant getRestaurant, HttpSession session) {
+        Restaurant restaurant = restaurantService.getRestaurant(getRestaurant.getRestId());
+        session.setAttribute("selectedRestaurant",restaurant);
         return "redirect:/menu";
     }
 

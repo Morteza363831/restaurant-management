@@ -8,13 +8,13 @@ import java.sql.SQLException;
 
 public interface UserService {
 
-    public void addUser(@NonNull User user) throws SQLException;
+    public void addUser(User user) throws SQLException;
 
-    public void remvoeUser(@NonNull String userId) throws SQLException;
+    public void remvoeUser(String userId) throws SQLException;
 
     public User getUser(String phone,String password);
 
-    public void updateUser(@NonNull User user) throws SQLException;
+    public void updateUser(User user) throws SQLException;
 
     public UserData getData();
 }
