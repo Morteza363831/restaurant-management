@@ -7,17 +7,26 @@
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         .food-card {
-            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .food-card .card-img-top {
             height: 200px;
             object-fit: cover;
+            border-radius: 5px 5px 0 0;
         }
 
         .food-card .card-body {
@@ -25,11 +34,60 @@
             flex-direction: column;
             justify-content: space-between;
             flex-grow: 1;
+            padding: 1.5rem;
         }
 
-        .food-card .card-body .btn-group {
-            margin-top: auto;
+        .food-card .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
+
+        .food-card .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004a9e;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-around;
+            align-items: center; /* Align items vertically in the center */
+            margin-bottom: 1rem;
+        }
+
+        .input-group .btn {
+            flex: 0 0 40px; /* Set a fixed width and height for the buttons */
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-group input {
+            flex: 1; /* Allow the input field to take up remaining space */
+            max-width: 60px; /* Set a maximum width for the input field */
+            max-height: 40px;
+            text-align: center; /* Center the text in the input field */
+        }
+
+
     </style>
 </head>
 <body>
@@ -59,25 +117,24 @@
     </div>
 </nav>
 
-<div class="container my-5">
-    <h1 class="mb-4 animate">Menu List</h1>
-    <div class="row g-4">
-        <!-- Food item cards -->
+<div class="container mt-5 pt-5 position-relative top-4">
+    <h1 class="mb-4 animate mt-4">Menu List</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <c:forEach var="food" items="${foods}">
-            <div class="col-md-4 mb-4">
-                <div class="card food-card">
+            <div class="col mb-4">
+                <div class="card food-card h-100">
                     <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" class="card-img-top" alt="${food.foodName}">
                     <div class="card-body">
-                        <h5 class="card-title">${food.foodName}</h5>
-                        <p class="card-text">$${food.foodPrice}</p>
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary btn-minus" type="button" id="minus">-</button>
-                            <input type="text" class="form-control text-center quantity" value="1" id="label">
-                            <button class="btn btn-outline-secondary btn-plus" type="button" id="plus">+</button>
-                        </div>
+                        <h5 class="card-title animate">${food.foodName}</h5>
+                        <p class="card-text animate">$${food.foodPrice}</p>
                         <form action="${pageContext.request.contextPath}/addToCart" method="post" class="mt-3">
-                            <input type="hidden" name="foodId" value="${food.foodId}" disabled>
-                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary btn-minus animate" type="button" id="${food.foodId}">-</button>
+                            <input type="text" class="form-control form-control-sm text-center" name="foodCount" value="1" id="quantity-${food.foodId}">
+                            <button class="btn btn-outline-secondary btn-plus animate" type="button" id="${food.foodId}">+</button>
+                        </div>
+                            <input type="hidden" name="foodId" value="${food.foodId}">
+                            <button type="submit" class="btn btn-primary animate">Add to Cart</button>
                         </form>
                     </div>
                 </div>
@@ -87,24 +144,42 @@
 </div>
 
 
+
 <script>
-    const quantityInput = document.getElementById("label");
-    const minusButton = document.getElementById("minus");
-    const plusButton = document.getElementById("plus");
+    const minusButtons = document.querySelectorAll(".btn-minus");
+    const plusButtons = document.querySelectorAll(".btn-plus");
 
-    // Add event listeners to the buttons
-    minusButton.addEventListener('click', decreaseQuantity);
-    plusButton.addEventListener('click', increaseQuantity);
+    minusButtons.forEach(button => {
+        button.onclick = function (event) {
+            const quantityInput = document.getElementById("quantity-"+button.id);
+            let quantity = parseInt(quantityInput.value);
+            if(quantity > 1) {
+                quantityInput.value = quantity -1;
+            }
+        }
 
-    // Functions to increase and decrease the quantity
-    function decreaseQuantity() {
+    });
+
+    plusButtons.forEach(button => {
+        button.onclick = function (event) {
+            const quantityInput = document.getElementById("quantity-"+button.id);
+            let quantity = parseInt(quantityInput.value);
+            quantityInput.value = quantity + 1;
+        }
+    });
+
+    function decreaseQuantity(event) {
+        const foodId = event.target.getAttribute('id');
+        const quantityInput = document.getElementById(`quantity-${foodId}`);
         let quantity = parseInt(quantityInput.value);
         if (quantity > 1) {
             quantityInput.value = quantity - 1;
         }
     }
 
-    function increaseQuantity() {
+    function increaseQuantity(event) {
+        const foodId = event.target.getAttribute('id');
+        const quantityInput = document.getElementById(`quantity-${foodId}`);
         let quantity = parseInt(quantityInput.value);
         quantityInput.value = quantity + 1;
     }
