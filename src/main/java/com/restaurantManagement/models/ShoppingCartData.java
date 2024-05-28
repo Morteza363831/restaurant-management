@@ -31,7 +31,7 @@ public class ShoppingCartData {
                 String foodId = resultSet.getString("foodId");
                 String foodName = resultSet.getString("name");
                 int foodPrice = Integer.parseInt(resultSet.getString("price"));
-                int foodCount = Integer.parseInt(resultSet.getString("foodCount"));
+                int foodCount = Integer.parseInt(resultSet.getString("count"));
                 String date = resultSet.getString("date");
                 String foodImg = resultSet.getString("foodImg");
                 shoppingCartData.add(new ShoppingCart(transactionId,userId,restId,foodId,foodName,foodPrice,foodCount,date,foodImg));
@@ -52,7 +52,7 @@ public class ShoppingCartData {
         List<String> transactionsId = new ArrayList<>();
         // get all transactionsId from shopping cart table
         while(resultSet.next()) {
-            transactionsId.add(resultSet.getString("foodId"));
+            transactionsId.add(resultSet.getString("transactionId"));
         }
         int idValue = 0;
         while(flag) {
@@ -73,6 +73,7 @@ public class ShoppingCartData {
                 preparedStatement.setString(9,addTransaction.getFoodImg());
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
+                flag = false;
                 break;
             }
             else {
@@ -91,6 +92,7 @@ public class ShoppingCartData {
                         preparedStatement.setString(9,addTransaction.getFoodImg());
                         preparedStatement.executeUpdate();
                         preparedStatement.close();
+                        flag = false;
                         break;
                     }
                 }
@@ -102,7 +104,7 @@ public class ShoppingCartData {
 
         // creating has been finished here
         // add transaction to list
-        addTransaction.setFoodId(idValue+"");
+        addTransaction.setTransactionId(idValue+"");
         shoppingCartData.add(addTransaction);
     }
 
@@ -133,7 +135,7 @@ public class ShoppingCartData {
             String foodId = resultSet.getString("foodId");
             String foodName = resultSet.getString("name");
             int foodPrice = Integer.parseInt(resultSet.getString("price"));
-            int foodCount = Integer.parseInt(resultSet.getString("foodCount"));
+            int foodCount = Integer.parseInt(resultSet.getString("count"));
             String date = resultSet.getString("date");
             String foodImg = resultSet.getString("foodImg");
             items.add(new ShoppingCart(transactionId,userId,restId,foodId,foodName,foodPrice,foodCount,date,foodImg));

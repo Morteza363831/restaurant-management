@@ -58,6 +58,7 @@ public class MenuData {
                 preparedStatement.setString(4,addFood.getFoodPrice()+"");
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
+                flag = false;
                 break;
             }
             else {
@@ -71,6 +72,7 @@ public class MenuData {
                         preparedStatement.setString(4,addFood.getFoodPrice()+"");
                         preparedStatement.executeUpdate();
                         preparedStatement.close();
+                         flag = false;
                         break;
                     }
                 } // for loop

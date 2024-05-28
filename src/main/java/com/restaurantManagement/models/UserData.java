@@ -65,6 +65,7 @@ public class UserData {
                 preparedStatement.setString(6,addUser.getPhone());
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
+                flag = false;
                 break;
             }
             for (String userId : usersId) {
@@ -78,6 +79,7 @@ public class UserData {
                     preparedStatement.setString(6,addUser.getPhone());
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
+                    flag = false;
                     break;
                 }
             }

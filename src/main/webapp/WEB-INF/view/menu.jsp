@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+
     <style>
+
+        .animate {
+            animation: fadeIn 1s ease-in-out;
+        }
         .food-card {
             display: flex;
             flex-direction: column;
@@ -87,6 +92,52 @@
             text-align: center; /* Center the text in the input field */
         }
 
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            width: 300px;
+            text-align: center;
+        }
+
+        .cart-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .cart-dropdown ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart-dropdown li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .cart-dropdown img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
     </style>
 </head>
@@ -113,7 +164,13 @@
                 </li>
             </ul>
         </div>
-        <a href="cart.html" class="text-white animate"><i class="fas fa-shopping-cart fa-lg"></i></a>
+        <div class="position-relative">
+            <a href="#" class="text-white animate" id="cart-icon"><i class="fas fa-shopping-cart fa-lg"></i></a>
+            <div class="cart-dropdown" id="cart-dropdown">
+                <h5>Added Items</h5>
+                <ul id="added-items"></ul>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -121,33 +178,86 @@
     <h1 class="mb-4 animate mt-4">Menu List</h1>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <c:forEach var="food" items="${foods}">
-            <div class="col mb-4">
-                <div class="card food-card h-100">
-                    <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" class="card-img-top" alt="${food.foodName}">
-                    <div class="card-body">
-                        <h5 class="card-title animate">${food.foodName}</h5>
-                        <p class="card-text animate">$${food.foodPrice}</p>
-                        <form action="${pageContext.request.contextPath}/addToCart" method="post" class="mt-3">
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary btn-minus animate" type="button" id="${food.foodId}">-</button>
-                            <input type="text" class="form-control form-control-sm text-center" name="foodCount" value="1" id="quantity-${food.foodId}">
-                            <button class="btn btn-outline-secondary btn-plus animate" type="button" id="${food.foodId}">+</button>
+            <form action="${pageContext.request.contextPath}/addToCart" id="${food.foodId}" method="post" class="mt-3 addToCartForm">
+                <div class="col mb-4">
+                    <div class="card food-card h-100">
+                        <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" id="img-${food.foodId}" class="card-img-top" alt="${food.foodImg}">
+                        <div class="card-body">
+                            <h5 class="card-title animate" id="title-${food.foodId}">${food.foodName}</h5>
+                            <p class="card-text animate" id="price-${food.foodId}">$${food.foodPrice}</p>
+
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary btn-minus animate" type="button" id="${food.foodId}">-</button>
+                                <input type="text" class="form-control form-control-sm text-center" name="foodCount" value="1" id="quantity-${food.foodId}">
+                                <button class="btn btn-outline-secondary btn-plus animate addToCartButton" type="button" id="${food.foodId}">+</button>
+                            </div>
+                                <input type="hidden" name="foodId" value="${food.foodId}">
+                                <button type="submit" class="btn btn-primary animate">Add to Cart</button>
+
                         </div>
-                            <input type="hidden" name="foodId" value="${food.foodId}">
-                            <button type="submit" class="btn btn-primary animate">Add to Cart</button>
-                        </form>
                     </div>
                 </div>
-            </div>
+            </form>
         </c:forEach>
     </div>
 </div>
 
-
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="add-to-cart-alert" style="display: none;">
+    <strong>Added to Cart!</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 <script>
     const minusButtons = document.querySelectorAll(".btn-minus");
     const plusButtons = document.querySelectorAll(".btn-plus");
+    const forms = document.querySelectorAll(".addToCartForm");
+
+    const cartIcon = document.getElementById("cart-icon");
+    const cartDropdown = document.getElementById("cart-dropdown");
+    const addedItemsList = document.getElementById("added-items");
+
+    let addedItems = [];
+
+    forms.forEach(form => {
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const foodId = form.id.valueOf();
+            const foodCount = document.getElementById("quantity-"+foodId).value;
+            const foodName = document.getElementById("title-"+foodId).textContent;
+            const foodPrice = document.getElementById("price-"+foodId).textContent;
+            const foodImg = document.getElementById("img-"+foodId).alt;
+            console.log(foodName + " " + foodPrice + " " + foodImg)
+            try {
+                const response = await fetch("${pageContext.request.contextPath}/addToCart", {
+                    method: "POST",
+                    body: new URLSearchParams({foodId,foodCount}),
+                });
+
+                if (response.ok) {
+                    const message = await response.text();
+                    showAlert(message);
+
+                    // Add the item to the added items list
+                    addedItems.push({
+                        id: foodId,
+                        name: foodName,
+                        price: foodPrice,
+                        count: foodCount,
+                        img: foodImg
+                    });
+
+                    updateCartDropdown();
+                } else {
+                    console.error("Error adding item to cart:", response.status);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    });
 
     minusButtons.forEach(button => {
         button.onclick = function (event) {
@@ -168,21 +278,45 @@
         }
     });
 
-    function decreaseQuantity(event) {
-        const foodId = event.target.getAttribute('id');
-        const quantityInput = document.getElementById(`quantity-${foodId}`);
-        let quantity = parseInt(quantityInput.value);
-        if (quantity > 1) {
-            quantityInput.value = quantity - 1;
-        }
+
+
+    function showAlert(message) {
+        const alert = document.getElementById("add-to-cart-alert");
+        alert.querySelector("strong").textContent = message;
+        alert.style.display = "block";
+
+        setTimeout(() => {
+            alert.style.display = "none";
+        }, 3000);
     }
 
-    function increaseQuantity(event) {
-        const foodId = event.target.getAttribute('id');
-        const quantityInput = document.getElementById(`quantity-${foodId}`);
-        let quantity = parseInt(quantityInput.value);
-        quantityInput.value = quantity + 1;
+    function updateCartDropdown() {
+        addedItemsList.innerHTML = "";
+
+        addedItems.forEach(item => {
+            const listItem = document.createElement("li");
+            console.log(item.name + " " + item.price + " " + item.count + " " + item.img + " int update");
+            const htmlList = "<img src='${pageContext.request.contextPath}/resources/images/foods/"+ item.img + "' alt='"+item.name+"'>" +
+                "<div>" +
+                "<h6>"+item.name+"</h6>" +
+                "<p>$" + item.price + " x " + item.count + "</p>" +
+                "</div>";
+            listItem.innerHTML = htmlList;
+            addedItemsList.appendChild(listItem);
+        });
     }
+
+    cartIcon.addEventListener("mouseenter", () => {
+        cartDropdown.style.display = "block";
+    });
+
+    cartIcon.addEventListener("mouseleave", () => {
+        cartDropdown.style.display = "none";
+    });
+
+
+
+
 </script>
 </body>
 </html>

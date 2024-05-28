@@ -62,6 +62,7 @@ public class RestaurantData {
                 preparedStatement.setString(5,addRestaurant.getRestImg());
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
+                flag = false;
                 break;
             }
             else {
@@ -75,6 +76,7 @@ public class RestaurantData {
                         preparedStatement.setString(5,addRestaurant.getRestImg());
                         preparedStatement.executeUpdate();
                         preparedStatement.close();
+                        flag = false;
                         break;
                     }
                 } // for loop
