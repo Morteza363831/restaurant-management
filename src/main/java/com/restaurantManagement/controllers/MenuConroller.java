@@ -20,6 +20,7 @@ import java.util.Map;
 public class MenuConroller {
     private final MenuService menuService;
     private final ShoppingCartService shoppingCartService;
+
     @Autowired
     public MenuConroller(MenuService menuService, ShoppingCartService shoppingCartService) {
         this.menuService = menuService;
@@ -30,6 +31,13 @@ public class MenuConroller {
     public List<Menu> foods(HttpSession session) throws SQLException {
         Restaurant restaurant = (Restaurant) session.getAttribute("selectedRestaurant");
         return menuService.getFoods(restaurant.getRestId());
+    }
+
+    @ModelAttribute("transactions")
+    public List<ShoppingCart> transactions(HttpSession session) throws SQLException {
+        User user = (User) session.getAttribute("signedInUser");
+        Restaurant restaurant = (Restaurant) session.getAttribute("selectedRestaurant");
+        return shoppingCartService.getTransactions(user.getUserId(), restaurant.getRestId());
     }
 
 

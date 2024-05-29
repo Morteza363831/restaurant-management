@@ -23,7 +23,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public List<ShoppingCart> getTransactions(String userId) throws SQLException {
-        return shoppingCartData.getTransactions(userId);
+    public List<ShoppingCart> getTransactions(String userId, String restId) throws SQLException {
+        return shoppingCartData.getTransactions(userId,restId);
     }
 }

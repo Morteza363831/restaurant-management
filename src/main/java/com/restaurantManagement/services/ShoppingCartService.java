@@ -12,5 +12,5 @@ public interface ShoppingCartService {
 
     public void removeTransaction(String transactionId) throws SQLException;
 
-    public List<ShoppingCart> getTransactions(String userId) throws SQLException;
+    public List<ShoppingCart> getTransactions(String userId, String restId) throws SQLException;
 }

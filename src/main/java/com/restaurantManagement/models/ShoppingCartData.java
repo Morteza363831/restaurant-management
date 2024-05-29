@@ -47,60 +47,86 @@ public class ShoppingCartData {
         // make unique id for each transaction
         Random random = new Random();
         boolean flag = true;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select transactionId from shoppingCart");
+
+        String foodId = addTransaction.getFoodId();
+        String userId = addTransaction.getUserId();
         List<String> transactionsId = new ArrayList<>();
+        List<String> foodsId = new ArrayList<>();
+        List<String> usersId = new ArrayList<>();
+        List<Integer> foodsCount = new ArrayList<>();
+        List<Integer> foodsPrice = new ArrayList<>();
         // get all transactionsId from shopping cart table
-        while(resultSet.next()) {
-            transactionsId.add(resultSet.getString("transactionId"));
+        for (ShoppingCart shoppingCart : shoppingCartData) {
+            transactionsId.add(shoppingCart.getTransactionId());
+            foodsId.add(shoppingCart.getFoodId());
+            usersId.add(shoppingCart.getUserId());
+            foodsCount.add(shoppingCart.getFoodCount());
+            foodsPrice.add(shoppingCart.getFoodPrice());
         }
         int idValue = 0;
-        while(flag) {
-            // inserting query
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into shoppingCart " +
-                    "(transactionId,userId,restId,foodId,name,price,count,date,foodImg) values (?,?,?,?,?,?,?,?,?)");
-            // generate random id between 1 and 90000
-            idValue = 1 + random.nextInt(90000);
-            if (transactionsId.isEmpty()) {
-                preparedStatement.setString(1,idValue+"");
-                preparedStatement.setString(2, addTransaction.getUserId());
-                preparedStatement.setString(3,addTransaction.getRestId());
-                preparedStatement.setString(4,addTransaction.getFoodId());
-                preparedStatement.setString(5, addTransaction.getFoodName());
-                preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
-                preparedStatement.setString(7,addTransaction.getFoodCount()+"");
-                preparedStatement.setString(8, LocalDate.now()+"");
-                preparedStatement.setString(9,addTransaction.getFoodImg());
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
-                flag = false;
-                break;
+        if (foodsId.contains(foodId) && usersId.contains(userId)) {
+            for (ShoppingCart transaction : shoppingCartData) {
+                if (transaction.getUserId().equals(userId) && transaction.getFoodId().equals(foodId)) {
+                    PreparedStatement preparedStatement = connection.prepareStatement("update shoppingCart set price = ?, count = ? where userId = ? and foodId = ?");
+                    int price = transaction.getFoodPrice() + addTransaction.getFoodPrice();
+                    int count = transaction.getFoodCount() + addTransaction.getFoodCount();
+                    preparedStatement.setInt(1,price);
+                    preparedStatement.setInt(2,count);
+                    preparedStatement.setString(3,userId);
+                    preparedStatement.setString(4,foodId);
+                    preparedStatement.executeUpdate();
+                    transaction.setFoodPrice(price);
+                    transaction.setFoodCount(count);
+                }
             }
-            else {
-                for (String transactionId : transactionsId) {
+        }
+        else {
+            while(flag) {
+                // inserting query
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into shoppingCart " +
+                        "(transactionId,userId,restId,foodId,name,price,count,date,foodImg) values (?,?,?,?,?,?,?,?,?)");
+                // generate random id between 1 and 90000
+                idValue = 1 + random.nextInt(90000);
+                if (transactionsId.isEmpty()) {
+                    preparedStatement.setString(1,idValue+"");
+                    preparedStatement.setString(2, addTransaction.getUserId());
+                    preparedStatement.setString(3,addTransaction.getRestId());
+                    preparedStatement.setString(4,addTransaction.getFoodId());
+                    preparedStatement.setString(5, addTransaction.getFoodName());
+                    preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
+                    preparedStatement.setString(7,addTransaction.getFoodCount()+"");
+                    preparedStatement.setString(8, LocalDate.now()+"");
+                    preparedStatement.setString(9,addTransaction.getFoodImg());
+                    preparedStatement.executeUpdate();
+                    preparedStatement.close();
+                    flag = false;
+                    break;
+                }
+                else {
+                    for (String transactionId : transactionsId) {
 
-                    if (!(idValue+"").equals(transactionId)) {
-                        // add food to sql
-                        preparedStatement.setString(1,idValue+"");
-                        preparedStatement.setString(2, addTransaction.getUserId());
-                        preparedStatement.setString(3,addTransaction.getRestId());
-                        preparedStatement.setString(4,addTransaction.getFoodId());
-                        preparedStatement.setString(5, addTransaction.getFoodName());
-                        preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
-                        preparedStatement.setString(7,addTransaction.getFoodCount()+"");
-                        preparedStatement.setString(8, LocalDate.now()+"");
-                        preparedStatement.setString(9,addTransaction.getFoodImg());
-                        preparedStatement.executeUpdate();
-                        preparedStatement.close();
-                        flag = false;
-                        break;
+                        if (!(idValue+"").equals(transactionId)) {
+                            // add food to sql
+                            preparedStatement.setString(1,idValue+"");
+                            preparedStatement.setString(2, addTransaction.getUserId());
+                            preparedStatement.setString(3,addTransaction.getRestId());
+                            preparedStatement.setString(4,addTransaction.getFoodId());
+                            preparedStatement.setString(5, addTransaction.getFoodName());
+                            preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
+                            preparedStatement.setString(7,addTransaction.getFoodCount()+"");
+                            preparedStatement.setString(8, LocalDate.now()+"");
+                            preparedStatement.setString(9,addTransaction.getFoodImg());
+                            preparedStatement.executeUpdate();
+                            preparedStatement.close();
+                            flag = false;
+                            break;
+                        }
                     }
                 }
             }
         }
-        // close execute query objects
-        resultSet.close();
-        statement.close();
+
+
 
         // creating has been finished here
         // add transaction to list
@@ -123,15 +149,15 @@ public class ShoppingCartData {
         }
     }
 
-    public List<ShoppingCart> getTransactions(String userId) throws SQLException {
+    public List<ShoppingCart> getTransactions(String userId,String restId) throws SQLException {
         // get a transaction from shoppingCart table
         List<ShoppingCart> items = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement("select * from shoppintCart where userId = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from shoppingCart where userId = ? and restId = ?");
         preparedStatement.setString(1,userId);
+        preparedStatement.setString(2,restId);
         ResultSet resultSet = preparedStatement.executeQuery();
         while(resultSet.next()) {
             String transactionId = resultSet.getString("transactionId");
-            String restId = resultSet.getString("restId");
             String foodId = resultSet.getString("foodId");
             String foodName = resultSet.getString("name");
             int foodPrice = Integer.parseInt(resultSet.getString("price"));
@@ -144,6 +170,7 @@ public class ShoppingCartData {
         if(items.isEmpty()) {
             return  null;
         }
+        System.out.println("everything is ok !");
         return items;
     }
 }

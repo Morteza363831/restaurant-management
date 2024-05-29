@@ -168,7 +168,17 @@
             <a href="#" class="text-white animate" id="cart-icon"><i class="fas fa-shopping-cart fa-lg"></i></a>
             <div class="cart-dropdown" id="cart-dropdown">
                 <h5>Added Items</h5>
-                <ul id="added-items"></ul>
+                <ul id="added-items">
+                    <c:forEach var="transaction" items="${transactions}">
+                        <li id="li-${transaction.foodId}" class="added-to-cart-list">
+                            <img src="${pageContext.request.contextPath}/resources/images/foods/${transaction.foodImg}" alt="${transaction.foodName}">
+                            <div>
+                                <h6>${transaction.foodName}</h6>
+                                <p id="pc-${transaction.foodId}">$${transaction.foodPrice} x ${transaction.foodCount}</p>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </ul>
             </div>
         </div>
     </div>
@@ -181,7 +191,7 @@
             <form action="${pageContext.request.contextPath}/addToCart" id="${food.foodId}" method="post" class="mt-3 addToCartForm">
                 <div class="col mb-4">
                     <div class="card food-card h-100">
-                        <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" id="img-${food.foodId}" class="card-img-top" alt="${food.foodImg}">
+                        <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" id="img-${food.foodId}" class="card-img-top animate" alt="${food.foodImg}">
                         <div class="card-body">
                             <h5 class="card-title animate" id="title-${food.foodId}">${food.foodName}</h5>
                             <p class="card-text animate" id="price-${food.foodId}">$${food.foodPrice}</p>
@@ -291,18 +301,32 @@
     }
 
     function updateCartDropdown() {
-        addedItemsList.innerHTML = "";
-
+        const addedToCartLists = document.querySelectorAll(".added-to-cart-list");
+        let flag = false;
         addedItems.forEach(item => {
-            const listItem = document.createElement("li");
-            console.log(item.name + " " + item.price + " " + item.count + " " + item.img + " int update");
-            const htmlList = "<img src='${pageContext.request.contextPath}/resources/images/foods/"+ item.img + "' alt='"+item.name+"'>" +
-                "<div>" +
-                "<h6>"+item.name+"</h6>" +
-                "<p>$" + item.price + " x " + item.count + "</p>" +
-                "</div>";
-            listItem.innerHTML = htmlList;
-            addedItemsList.appendChild(listItem);
+            addedToCartLists.forEach(list => {
+                if (item.foodId === list.id) {
+                    flag = true;
+                }
+            })
+            if (flag) {
+                const existingListItem = document.getElementById("pc-${item.foodId}");
+                if (existingListItem) {
+                    // cant get list price and count fix it
+                    existingListItem.textContent = item.price + " x " + item.count;
+                }
+            }
+            else {
+                const listItem = document.createElement("li");
+                console.log(item.name + " " + item.price + " " + item.count + " " + item.img + " int update");
+                const htmlList = "<img src='${pageContext.request.contextPath}/resources/images/foods/"+ item.img + "' alt='"+item.name+"'>" +
+                    "<div>" +
+                    "<h6>"+item.name+"</h6>" +
+                    "<p class ='pc-" + item.foodId + "'>" + item.price + " x " + item.count + "</p>" +
+                    "</div>";
+                listItem.innerHTML = htmlList;
+                addedItemsList.appendChild(listItem);
+            }
         });
     }
 
