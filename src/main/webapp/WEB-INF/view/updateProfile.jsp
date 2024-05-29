@@ -46,6 +46,10 @@
             <input type="tel" class="form-control" id="phone" name="phone" value="${user.phone}" disabled required>
         </div>
         <div class="form-group animate">
+            <label for="accessLevel">Access Level:</label>
+            <input type="tel" class="form-control" id="accessLevel" name="accessLevel" value="${user.accessLevel}" disabled required>
+        </div>
+        <div class="form-group animate">
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password">
         </div>

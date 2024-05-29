@@ -86,7 +86,7 @@ public class RestaurantController {
 
     @ModelAttribute("updatedUser")
     public User information() {
-        return new User("","","","","","");
+        return new User("","","","","","","");
     }
 
 

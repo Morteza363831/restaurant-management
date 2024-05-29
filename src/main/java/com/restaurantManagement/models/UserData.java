@@ -30,7 +30,8 @@ public class UserData {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
-                userData.add(new User(userId,fname,lname,password,email,phone));
+                String accessLevel = resultSet.getString("access_level");
+                userData.add(new User(userId,fname,lname,password,email,phone,accessLevel));
             }
             resultSet.close();
             preparedStatement.close();
@@ -52,7 +53,7 @@ public class UserData {
         int idValue = 0;
         while(flag) {
             // inserting query using ps
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into users (userId,fname,lname,password,email,phone) values (?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into users (userId,fname,lname,password,email,phone,access_level) values (?,?,?,?,?,?,?)");
             // generate unique id for each user
             idValue = 10000 + random.nextInt(90000);
             // add user to sql
@@ -63,6 +64,7 @@ public class UserData {
                 preparedStatement.setString(4,addUser.getPassword());
                 preparedStatement.setString(5,addUser.getEmail());
                 preparedStatement.setString(6,addUser.getPhone());
+                preparedStatement.setString(7,"user");
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
                 flag = false;
@@ -77,6 +79,7 @@ public class UserData {
                     preparedStatement.setString(4,addUser.getPassword());
                     preparedStatement.setString(5,addUser.getEmail());
                     preparedStatement.setString(6,addUser.getPhone());
+                    preparedStatement.setString(7,"user");
                     preparedStatement.executeUpdate();
                     preparedStatement.close();
                     flag = false;

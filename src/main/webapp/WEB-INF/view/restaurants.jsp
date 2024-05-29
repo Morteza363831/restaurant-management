@@ -77,7 +77,6 @@
                 </li>
             </ul>
         </div>
-        <a href="cart.html" class="text-white animate"><i class="fas fa-shopping-cart fa-lg"></i></a>
     </div>
 </nav>
 

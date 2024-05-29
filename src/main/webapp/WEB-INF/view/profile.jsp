@@ -62,6 +62,10 @@
                     <h2><i class="fas fa-phone icon"></i>Phone Number:</h2>
                     <p>${user.phone}</p>
                 </div>
+                <div class="col-md-6">
+                    <h2><i class="fas fa-phone icon"></i>Access Level:</h2>
+                    <p>${user.accessLevel}</p>
+                </div>
             </div>
             <a href="${pageContext.request.contextPath}/profile/update" class="btn btn-primary"><i class="fas fa-edit"></i>Make Changes</a>
             <a href="${pageContext.request.contextPath}/restaurants" class="btn btn-secondary back-button">

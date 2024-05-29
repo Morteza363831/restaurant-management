@@ -21,14 +21,17 @@ public class User {
     private String email;
     @NonNull
     private String phone;
+    @NonNull
+    private String accessLevel;
 
     // constructors
-    public User(String userId, String fname, String lname, String password, String email, String phone) {
+    public User(String userId, String fname, String lname, String password, String email, String phone,String accessLevel) {
         this.userId = userId;
         this.fname = fname;
         this.lname = lname;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.accessLevel = accessLevel;
     }
 }
