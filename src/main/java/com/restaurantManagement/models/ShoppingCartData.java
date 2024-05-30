@@ -65,22 +65,22 @@ public class ShoppingCartData {
         }
         int idValue = 0;
         if (foodsId.contains(foodId) && usersId.contains(userId)) {
+            System.out.println("updating");
             for (ShoppingCart transaction : shoppingCartData) {
                 if (transaction.getUserId().equals(userId) && transaction.getFoodId().equals(foodId)) {
-                    PreparedStatement preparedStatement = connection.prepareStatement("update shoppingCart set price = ?, count = ? where userId = ? and foodId = ?");
-                    int price = transaction.getFoodPrice() + addTransaction.getFoodPrice();
+                    PreparedStatement preparedStatement = connection.prepareStatement("update shoppingCart set count = ? where userId = ? and foodId = ?");
                     int count = transaction.getFoodCount() + addTransaction.getFoodCount();
-                    preparedStatement.setInt(1,price);
-                    preparedStatement.setInt(2,count);
-                    preparedStatement.setString(3,userId);
-                    preparedStatement.setString(4,foodId);
+                    System.out.println(count + " = " + transaction.getFoodCount() + " + " + addTransaction.getFoodCount());
+                    preparedStatement.setInt(1,count);
+                    preparedStatement.setString(2,userId);
+                    preparedStatement.setString(3,foodId);
                     preparedStatement.executeUpdate();
-                    transaction.setFoodPrice(price);
                     transaction.setFoodCount(count);
                 }
             }
         }
         else {
+            System.out.println("inserting");
             while(flag) {
                 // inserting query
                 PreparedStatement preparedStatement = connection.prepareStatement("insert into shoppingCart " +
@@ -93,7 +93,7 @@ public class ShoppingCartData {
                     preparedStatement.setString(3,addTransaction.getRestId());
                     preparedStatement.setString(4,addTransaction.getFoodId());
                     preparedStatement.setString(5, addTransaction.getFoodName());
-                    preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
+                    preparedStatement.setString(6,(addTransaction.getFoodPrice())+"");
                     preparedStatement.setString(7,addTransaction.getFoodCount()+"");
                     preparedStatement.setString(8, LocalDate.now()+"");
                     preparedStatement.setString(9,addTransaction.getFoodImg());
@@ -112,7 +112,7 @@ public class ShoppingCartData {
                             preparedStatement.setString(3,addTransaction.getRestId());
                             preparedStatement.setString(4,addTransaction.getFoodId());
                             preparedStatement.setString(5, addTransaction.getFoodName());
-                            preparedStatement.setString(6,(addTransaction.getFoodPrice()*addTransaction.getFoodCount())+"");
+                            preparedStatement.setString(6,(addTransaction.getFoodPrice())+"");
                             preparedStatement.setString(7,addTransaction.getFoodCount()+"");
                             preparedStatement.setString(8, LocalDate.now()+"");
                             preparedStatement.setString(9,addTransaction.getFoodImg());
@@ -124,14 +124,15 @@ public class ShoppingCartData {
                     }
                 }
             }
+            // creating has been finished here
+            // add transaction to list
+            addTransaction.setTransactionId(idValue+"");
+            shoppingCartData.add(addTransaction);
         }
 
 
 
-        // creating has been finished here
-        // add transaction to list
-        addTransaction.setTransactionId(idValue+"");
-        shoppingCartData.add(addTransaction);
+
     }
 
     public void removeTransaction(String transactionId) throws SQLException {
@@ -170,7 +171,6 @@ public class ShoppingCartData {
         if(items.isEmpty()) {
             return  null;
         }
-        System.out.println("everything is ok !");
         return items;
     }
 }
