@@ -5,11 +5,25 @@
 <head>
     <title>Sign In</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        .btn-primary {
+            background-color: #2980b9; /* Match the color of the Sign Up button */
+            border-color: #2980b9;
+            color: #fff; /* Set text color to white */
+            transition: background-color 0.3s, border-color 0.3s; /* Add smooth transition effect */
+        }
+
+        .btn-primary:hover {
+            background-color: #1c6fa5; /* Darker shade on hover */
+            border-color: #1c6fa5;
+        }
+
         body {
-            color: #212529;
-            background-color: #E9ECEF;
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -18,8 +32,11 @@
         }
 
         .div-1 {
-            padding: 10vw;
-            animation: fadeInRight 1s ease-in-out;
+            padding: 3rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeInRight 0.8s ease-in-out;
         }
 
         .div-2 {
@@ -28,14 +45,14 @@
             align-items: center;
             justify-content: center;
             margin-left: 5vw;
-            animation: fadeInLeft 1s ease-in-out;
+            animation: fadeInLeft 0.8s ease-in-out;
         }
 
         .cup {
             position: relative;
             width: 15vw;
             height: 40vh;
-            background: linear-gradient(to right, #F8F9FA, #CED4DA);
+            background: linear-gradient(to right, #f8f9fa, #ced4da);
             margin-left: 2vw;
             border-bottom-left-radius: 38%;
             border-bottom-right-radius: 38%;
@@ -43,17 +60,13 @@
             align-items: center;
             text-align: center;
             justify-content: center;
-            color: #F8F9FA;
-            animation: fadeInLeft 1s ease-in-out;
+            color: #f8f9fa;
+            animation: fadeInLeft 0.8s ease-in-out;
         }
 
         .cup:hover {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            justify-content: center;
-            transition-duration: 1s;
             color: #c57e65;
+            transition: color 0.5s ease-in-out;
         }
 
         .top {
@@ -61,7 +74,7 @@
             top: -4vh;
             width: 15vw;
             height: 8vh;
-            background: linear-gradient(to right, #F8F9FA, #CED4DA);
+            background: linear-gradient(to right, #f8f9fa, #ced4da);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -73,7 +86,7 @@
             top: 1vh;
             width: 14vw;
             height: 6vh;
-            background: linear-gradient(to left, #F8F9FA, #CED4DA);
+            background: linear-gradient(to left, #f8f9fa, #ced4da);
             background-color: #000000;
             border-radius: 50%;
             display: flex;
@@ -94,7 +107,7 @@
             position: absolute;
             width: 5vw;
             height: 16vh;
-            border: solid 3vh #CED4DA;
+            border: solid 3vh #ced4da;
             border-left: solid 3vh transparent;
             border-bottom: solid 3vh transparent;
             border-radius: 50%;
@@ -108,7 +121,7 @@
             transform: translateX(-50%);
             width: 25vw;
             height: 18vh;
-            background: linear-gradient(to right, #F8F9FA, #CED4DA);
+            background: linear-gradient(to right, #f8f9fa, #ced4da);
             border-radius: 50%;
             margin-left: 27vw;
             margin-top: 36vh;
@@ -123,7 +136,7 @@
             right: 0.5vw;
             bottom: 0.5vw;
             border-radius: 50%;
-            background: linear-gradient(to left, #F8F9FA, #CED4DA);
+            background: linear-gradient(to left, #f8f9fa, #ced4da);
         }
 
         .plate::after {
@@ -150,7 +163,7 @@
             margin: 0.2vw;
             min-width: 0.3vw;
             height: 10vh;
-            background: #ADB5BD;
+            background: #adb5bd;
             border-radius: 50%;
             animation: animate 5s linear infinite;
             opacity: 0;
@@ -202,19 +215,19 @@
 </head>
 <body>
 <form:form action="${pageContext.request.contextPath}/getUser" method="post" modelAttribute="user" class="bg-light p-5 rounded shadow div-1">
-    <h1 class="text-center mb-4">Sign In</h1>
-    <div class="form-group">
+    <h1 class="text-center mb-4 animate__animated animate__fadeInDown">Sign In</h1>
+    <div class="form-group animate__animated animate__fadeInUp">
         <label for="phone">Phone Number:</label>
         <form:input path="phone" id="phone" class="form-control form-control-lg"></form:input>
     </div>
-    <div class="form-group">
+    <div class="form-group animate__animated animate__fadeInUp">
         <label for="password">Password:</label>
         <form:input path="password" id="password" type="password" class="form-control form-control-lg"></form:input>
     </div>
-    <div class="text-center">
+    <div class="text-center animate__animated animate__fadeInUp">
         <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
     </div>
-    <div class="text-center mt-3">
+    <div class="text-center mt-3 animate__animated animate__fadeInUp">
         <p>Don't have an account? <a href="${pageContext.request.contextPath}/signUp" class="btn btn-link">Sign Up</a></p>
     </div>
 </form:form>

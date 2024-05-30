@@ -7,18 +7,19 @@
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-
-        .animate {
-            animation: fadeIn 1s ease-in-out;
+        .animate__animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
         }
+
         .food-card {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             border: none;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
@@ -31,7 +32,8 @@
         .food-card .card-img-top {
             height: 200px;
             object-fit: cover;
-            border-radius: 5px 5px 0 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
 
         .food-card .card-body {
@@ -45,6 +47,7 @@
         .food-card .card-title {
             font-size: 1.25rem;
             font-weight: bold;
+            color: #2980b9;
             margin-bottom: 0.5rem;
         }
 
@@ -57,39 +60,34 @@
         .input-group {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 1rem;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004a9e;
-        }
-
-        .input-group {
-            display: flex;
-            justify-content: space-around;
-            align-items: center; /* Align items vertically in the center */
+            align-items: center;
             margin-bottom: 1rem;
         }
 
         .input-group .btn {
-            flex: 0 0 40px; /* Set a fixed width and height for the buttons */
+            flex: 0 0 40px;
             height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #2980b9;
+            border-color: #2980b9;
+            color: #fff;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .input-group .btn:hover {
+            background-color: #1c6fa5;
+            border-color: #1c6fa5;
         }
 
         .input-group input {
-            flex: 1; /* Allow the input field to take up remaining space */
-            max-width: 60px; /* Set a maximum width for the input field */
+            flex: 1;
+            max-width: 60px;
             max-height: 40px;
-            text-align: center; /* Center the text in the input field */
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
         }
 
         .alert {
@@ -134,43 +132,52 @@
             margin-right: 10px;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .navbar {
+            background-color: #2980b9 !important;
+            animation: animate__slideInDown 0.5s ease-in-out;
         }
 
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #f8f9fa !important;
+        }
     </style>
 </head>
 <body>
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar fixed-top navbar-expand-lg">
     <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand animate" href="#">Restaurant Management</a>
+        <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">Restaurant Management</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-center animate" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-center animate__animated animate__fadeInRight" id="navbarNav">
             <ul class="navbar-nav d-flex justify-content-around align-items-center">
                 <li class="nav-item mx-3">
-                    <a class="nav-link animate" href="#">Home</a>
+                    <a class="nav-link animate__animated animate__fadeInUp" href="#">Home</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link animate" href="#">Restaurants</a>
+                    <a class="nav-link animate__animated animate__fadeInUp" href="#">Restaurants</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link animate" href="profile">Profile</a>
+                    <a class="nav-link animate__animated animate__fadeInUp" href="profile">Profile</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link animate" href="#">Contact</a>
+                    <a class="nav-link animate__animated animate__fadeInUp" href="#">Contact</a>
                 </li>
             </ul>
         </div>
         <div class="position-relative">
-            <a href="#" class="text-white animate" id="cart-icon"><i class="fas fa-shopping-cart fa-lg"></i></a>
+            <a href="#" class="text-white animate__animated animate__fadeInRight" id="cart-icon"><i class="fas fa-shopping-cart fa-lg"></i></a>
             <div class="cart-dropdown" id="cart-dropdown">
                 <h5>Added Items</h5>
                 <ul id="added-items">
                     <c:forEach var="transaction" items="${transactions}">
-                        <li id="li-${transaction.foodId}" class="added-to-cart-list">
+                        <li id="li-${transaction.foodId}" class="added-to-cart-list animate__animated animate__fadeInUp">
                             <img src="${pageContext.request.contextPath}/resources/images/foods/${transaction.foodImg}" alt="${transaction.foodName}">
                             <div>
                                 <h6>${transaction.foodName}</h6>
@@ -185,25 +192,23 @@
 </nav>
 
 <div class="container mt-5 pt-5 position-relative top-4">
-    <h1 class="mb-4 animate mt-4">Menu List</h1>
+    <h1 class="mb-4 animate__animated animate__fadeInDown">Menu List</h1>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <c:forEach var="food" items="${foods}">
             <form action="${pageContext.request.contextPath}/addToCart" id="${food.foodId}" method="post" class="mt-3 addToCartForm">
                 <div class="col mb-4">
-                    <div class="card food-card h-100">
-                        <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" id="img-${food.foodId}" class="card-img-top animate" alt="${food.foodImg}">
+                    <div class="card food-card h-100 animate__animated animate__fadeInUp">
+                        <img src="${pageContext.request.contextPath}/resources/images/foods/${food.foodImg}" id="img-${food.foodId}" class="card-img-top animate__animated animate__fadeInLeft" alt="${food.foodImg}">
                         <div class="card-body">
-                            <h5 class="card-title animate" id="title-${food.foodId}">${food.foodName}</h5>
-                            <p class="card-text animate" id="price-${food.foodId}">$${food.foodPrice}</p>
-
+                            <h5 class="card-title animate__animated animate__fadeInLeft" id="title-${food.foodId}">${food.foodName}</h5>
+                            <p class="card-text animate__animated animate__fadeInRight" id="price-${food.foodId}">$${food.foodPrice}</p>
                             <div class="input-group">
-                                <button class="btn btn-outline-secondary btn-minus animate" type="button" id="${food.foodId}">-</button>
+                                <button class="btn btn-outline-secondary btn-minus animate__animated animate__fadeInLeft" type="button" id="${food.foodId}">-</button>
                                 <input type="text" class="form-control form-control-sm text-center" name="foodCount" value="1" id="quantity-${food.foodId}">
-                                <button class="btn btn-outline-secondary btn-plus animate addToCartButton" type="button" id="${food.foodId}">+</button>
+                                <button class="btn btn-outline-secondary btn-plus animate__animated animate__fadeInRight addToCartButton" type="button" id="${food.foodId}">+</button>
                             </div>
-                                <input type="hidden" name="foodId" value="${food.foodId}">
-                                <button type="submit" class="btn btn-primary animate">Add to Cart</button>
-
+                            <input type="hidden" name="foodId" value="${food.foodId}">
+                            <button type="submit" class="btn btn-primary animate__animated animate__fadeInUp">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -212,7 +217,7 @@
     </div>
 </div>
 
-<div class="alert alert-success alert-dismissible fade show" role="alert" id="add-to-cart-alert" style="display: none;">
+<div class="alert alert-success alert-dismissible fade show animate__animated animate__fadeInUp" role="alert" id="add-to-cart-alert" style="display: none;">
     <strong>Added to Cart!</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -239,7 +244,7 @@
             const foodName = document.getElementById("title-"+foodId).textContent;
             const foodPrice = document.getElementById("price-"+foodId).textContent;
             const foodImg = document.getElementById("img-"+foodId).alt;
-            console.log(foodName + " " + foodPrice + " " + foodImg)
+
             try {
                 const response = await fetch("${pageContext.request.contextPath}/addToCart", {
                     method: "POST",
@@ -249,8 +254,7 @@
                 if (response.ok) {
                     const message = await response.text();
                     showAlert(message);
-
-                    // Add the item to the added items list
+                    document.getElementById("quantity-"+foodId).value = 1;
                     addedItems.push({
                         id: foodId,
                         name: foodName,
@@ -277,7 +281,6 @@
                 quantityInput.value = quantity -1;
             }
         }
-
     });
 
     plusButtons.forEach(button => {
@@ -287,8 +290,6 @@
             quantityInput.value = quantity + 1;
         }
     });
-
-
 
     function showAlert(message) {
         const alert = document.getElementById("add-to-cart-alert");
@@ -305,29 +306,31 @@
         let flag = false;
         addedItems.forEach(item => {
             addedToCartLists.forEach(list => {
-                if (item.foodId === list.id) {
+                if (item.id === list.id) {
                     flag = true;
                 }
             })
             if (flag) {
-                const existingListItem = document.getElementById("pc-${item.foodId}");
+                const existingListItem = document.getElementById("pc-"+item.id);
                 if (existingListItem) {
-                    // cant get list price and count fix it
                     existingListItem.textContent = item.price + " x " + item.count;
+                    addedItems.pop();
                 }
             }
             else {
                 const listItem = document.createElement("li");
-                console.log(item.name + " " + item.price + " " + item.count + " " + item.img + " int update");
+                listItem.className = "added-to-cart-list animate__animated animate__fadeInUp";
                 const htmlList = "<img src='${pageContext.request.contextPath}/resources/images/foods/"+ item.img + "' alt='"+item.name+"'>" +
                     "<div>" +
                     "<h6>"+item.name+"</h6>" +
-                    "<p class ='pc-" + item.foodId + "'>" + item.price + " x " + item.count + "</p>" +
+                    "<p class ='pc-" + item.id + "'>" + item.price + " x " + item.count + "</p>" +
                     "</div>";
                 listItem.innerHTML = htmlList;
                 addedItemsList.appendChild(listItem);
+                addedItems.pop();
             }
         });
+
     }
 
     cartIcon.addEventListener("mouseenter", () => {
@@ -337,10 +340,6 @@
     cartIcon.addEventListener("mouseleave", () => {
         cartDropdown.style.display = "none";
     });
-
-
-
-
 </script>
 </body>
 </html>
