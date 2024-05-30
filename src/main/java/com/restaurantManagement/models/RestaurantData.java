@@ -99,7 +99,7 @@ public class RestaurantData {
             if (item.getRestId().equals(restId)) {
                 // delete restaurant in users table
                 Statement statement = connection.createStatement();
-                statement.execute("delete from restaurants where restId = ''"+ restId + "''");
+                statement.execute("delete from restaurants where restId = '"+ restId + "'");
                 statement.close();
                 itemListIterator.remove();
                 break;

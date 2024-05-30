@@ -93,7 +93,7 @@
         .alert {
             position: fixed;
             top: 50%;
-            left: 50%;
+            left: 40%;
             transform: translate(-50%, -50%);
             z-index: 9999;
             width: 300px;
@@ -172,16 +172,19 @@
             </ul>
         </div>
         <div class="position-relative">
-            <a href="#" class="text-white animate__animated animate__fadeInRight" id="cart-icon"><i class="fas fa-shopping-cart fa-lg"></i></a>
+            <a href="shoppingCart" class="text-white animate__animated animate__fadeInRight" id="cart-icon">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="cart-count" id="cart-count">${addedItems.size()}</span>
+            </a>
             <div class="cart-dropdown" id="cart-dropdown">
                 <h5>Added Items</h5>
                 <ul id="added-items">
                     <c:forEach var="transaction" items="${transactions}">
-                        <li id="li-${transaction.foodId}" class="added-to-cart-list animate__animated animate__fadeInUp">
+                        <li id="${transaction.foodId}" class="added-to-cart-list animate__animated animate__fadeInUp">
                             <img src="${pageContext.request.contextPath}/resources/images/foods/${transaction.foodImg}" alt="${transaction.foodName}">
                             <div>
                                 <h6>${transaction.foodName}</h6>
-                                <p id="pc-${transaction.foodId}">$${transaction.foodPrice} x ${transaction.foodCount}</p>
+                                <p class="pc-${transaction.foodId}" id="pc-${transaction.foodId}">$${transaction.foodPrice} x ${transaction.foodCount}</p>
                             </div>
                         </li>
                     </c:forEach>
@@ -307,19 +310,18 @@
         addedItems.forEach(item => {
             addedToCartLists.forEach(list => {
                 if (item.id === list.id) {
+                    const existingListItem = list.querySelector("div");
+                    const existingCount = parseInt(existingListItem.querySelector("p.pc-" + item.id).textContent.split(" x ")[1]);
+                    const newCount = existingCount + parseInt(item.count);
+                    existingListItem.querySelector("p.pc-" + item.id).textContent = item.price + " x " + newCount;
+                    addedItems.pop();
                     flag = true;
                 }
             })
-            if (flag) {
-                const existingListItem = document.getElementById("pc-"+item.id);
-                if (existingListItem) {
-                    existingListItem.textContent = item.price + " x " + item.count;
-                    addedItems.pop();
-                }
-            }
-            else {
+            if (!flag) {
                 const listItem = document.createElement("li");
                 listItem.className = "added-to-cart-list animate__animated animate__fadeInUp";
+                listItem.id = item.id;
                 const htmlList = "<img src='${pageContext.request.contextPath}/resources/images/foods/"+ item.img + "' alt='"+item.name+"'>" +
                     "<div>" +
                     "<h6>"+item.name+"</h6>" +
@@ -329,9 +331,21 @@
                 addedItemsList.appendChild(listItem);
                 addedItems.pop();
             }
+            flag = false;
         });
+    };
 
+    function updateCartCount() {
+        const addedItemsList = document.getElementById("added-items");
+        const cartCountSpan = document.getElementById("cart-count");
+        const addedItems = addedItemsList.querySelectorAll(".added-to-cart-list");
+        cartCountSpan.textContent = addedItems.length;
     }
+
+    // Call the function to update the count when the page loads or refreshes
+    document.addEventListener("DOMContentLoaded", function() {
+        updateCartCount();
+    });
 
     cartIcon.addEventListener("mouseenter", () => {
         cartDropdown.style.display = "block";

@@ -26,4 +26,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     public List<ShoppingCart> getTransactions(String userId, String restId) throws SQLException {
         return shoppingCartData.getTransactions(userId,restId);
     }
+
+    @Override
+    public void updateShoppingCart(String transactionId, int foodCount) throws SQLException {
+         shoppingCartData.updateShoppingCart(transactionId,foodCount);
+    }
 }

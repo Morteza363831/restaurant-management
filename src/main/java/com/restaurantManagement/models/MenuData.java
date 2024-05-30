@@ -94,7 +94,7 @@ public class MenuData {
             if (item.getFoodId().equals(foodId)) {
                 // delete food from menu table
                 Statement statement = connection.createStatement();
-                statement.execute("delete from menu where foodId = ''"+ foodId + "''");
+                statement.execute("delete from menu where foodId = '"+ foodId + "'");
                 statement.close();
                 itemListIterator.remove();
                 break;

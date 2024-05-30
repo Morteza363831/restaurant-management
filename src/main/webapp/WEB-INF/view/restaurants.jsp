@@ -146,7 +146,7 @@
             z-index: 1000;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
         }
 
         .timeline-circle {
@@ -166,7 +166,7 @@
             width: 4px;
             height: 0;
             background-color: #ccc;
-            transition: height 0.5s ease, background-color 0.5s ease;
+            transition: height 0.8s ease, background-color 0.8s ease;
         }
 
         .timeline-line.active {
@@ -202,12 +202,12 @@
 </nav>
 
 <div class="container my-5 pt-5">
-    <h1 class="mb-4 scroll-animation">Restaurant Management</h1>
+    <h1 class="mb-4 ">Restaurant Management</h1>
 
     <section class="py-5">
         <div class="container">
-            <h2 class="mb-4 scroll-animation">Welcome to Our Restaurant</h2>
-            <p class="scroll-animation">Discover the finest dining experience in town. Our restaurant offers a wide variety of delectable dishes, prepared with the freshest ingredients and served with impeccable service.</p>
+            <h2 class="mb-4 ">Welcome to Our Restaurant</h2>
+            <p class="">Discover the finest dining experience in town. Our restaurant offers a wide variety of delectable dishes, prepared with the freshest ingredients and served with impeccable service.</p>
         </div>
     </section>
 

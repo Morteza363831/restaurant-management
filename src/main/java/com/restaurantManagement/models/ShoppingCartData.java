@@ -65,12 +65,10 @@ public class ShoppingCartData {
         }
         int idValue = 0;
         if (foodsId.contains(foodId) && usersId.contains(userId)) {
-            System.out.println("updating");
             for (ShoppingCart transaction : shoppingCartData) {
                 if (transaction.getUserId().equals(userId) && transaction.getFoodId().equals(foodId)) {
                     PreparedStatement preparedStatement = connection.prepareStatement("update shoppingCart set count = ? where userId = ? and foodId = ?");
                     int count = transaction.getFoodCount() + addTransaction.getFoodCount();
-                    System.out.println(count + " = " + transaction.getFoodCount() + " + " + addTransaction.getFoodCount());
                     preparedStatement.setInt(1,count);
                     preparedStatement.setString(2,userId);
                     preparedStatement.setString(3,foodId);
@@ -80,7 +78,6 @@ public class ShoppingCartData {
             }
         }
         else {
-            System.out.println("inserting");
             while(flag) {
                 // inserting query
                 PreparedStatement preparedStatement = connection.prepareStatement("insert into shoppingCart " +
@@ -142,7 +139,7 @@ public class ShoppingCartData {
             if (item.getTransactionId().equals(transactionId)) {
                 // delete transaction from shoppingCart table
                 Statement statement = connection.createStatement();
-                statement.execute("delete from shoppingCart where transactionId = ''"+ transactionId + "''");
+                statement.execute("delete from shoppingCart where transactionId = '" + transactionId + "'");
                 statement.close();
                 itemListIterator.remove();
                 break;
@@ -172,5 +169,17 @@ public class ShoppingCartData {
             return  null;
         }
         return items;
+    }
+
+    public void updateShoppingCart(String transactionId,int foodCount) throws SQLException {
+        for (ShoppingCart transaction : shoppingCartData) {
+            if (transaction.getTransactionId().equals(transactionId)) {
+                PreparedStatement preparedStatement = connection.prepareStatement("update shoppingCart set count = ? where transactionId = ?");
+                preparedStatement.setInt(1,foodCount);
+                preparedStatement.setString(2,transactionId);
+                preparedStatement.executeUpdate();
+                transaction.setFoodCount(foodCount);
+            }
+        }
     }
 }
