@@ -127,9 +127,6 @@ public class ShoppingCartData {
             shoppingCartData.add(addTransaction);
         }
 
-
-
-
     }
 
     public void removeTransaction(String transactionId) throws SQLException {

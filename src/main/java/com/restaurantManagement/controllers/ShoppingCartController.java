@@ -18,12 +18,10 @@ import java.util.List;
 public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
-    private final TransactionService transactionService;
 
     @Autowired
-    public ShoppingCartController(ShoppingCartService shoppingCartService,TransactionService transactionService) {
+    public ShoppingCartController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
-        this.transactionService = transactionService;
     }
 
     @ModelAttribute("transactions")
@@ -35,6 +33,7 @@ public class ShoppingCartController {
 
     @GetMapping("shoppingCart")
     public String shoppingCart() {
+        System.out.println("fuck all of you");
         return "shoppingCart";
     }
 
@@ -51,6 +50,11 @@ public class ShoppingCartController {
     public ResponseEntity<String> removeFromCart(@RequestParam("transactionId") String transactionId) throws SQLException {
         shoppingCartService.removeTransaction(transactionId);
         return ResponseEntity.ok("Item removed from cart");
+    }
+
+    @PostMapping("checkout")
+    public String checkOut() {
+        return "purchase";
     }
 
 

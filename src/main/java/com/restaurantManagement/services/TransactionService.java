@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TransactionService {
 
-    public void addTransaction(Transaction transaction) throws SQLException;
+    public void addTransaction(String userId, String restId, String address, int foodPrice, int foodCount) throws SQLException;
 
     public void removeTransaction(String transactionId) throws SQLException;
 

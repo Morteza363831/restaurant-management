@@ -15,9 +15,7 @@ public class Transaction {
     @NonNull
     private String restId;
     @NonNull
-    private String foodId;
-    @NonNull
-    private String foodName;
+    private String address;
     @NonNull
     private int foodPrice;
     @NonNull
@@ -25,12 +23,11 @@ public class Transaction {
     @NonNull
     private String date;
 
-    public Transaction(String transactionId, String userId, String restId, String foodId, String foodName, int foodPrice, int foodCount, String date) {
+    public Transaction(String transactionId, String userId, String restId, String address, int foodPrice, int foodCount, String date) {
         this.transactionId = transactionId;
         this.userId = userId;
         this.restId = restId;
-        this.foodId = foodId;
-        this.foodName = foodName;
+        this.address = address;
         this.foodPrice = foodPrice;
         this.foodCount = foodCount;
         this.date = date;

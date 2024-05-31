@@ -12,8 +12,8 @@ public class TransactionServiceImpl implements TransactionService{
 
     private TransactionData transactionData = new TransactionData();
     @Override
-    public void addTransaction(Transaction transaction) throws SQLException {
-        transactionData.addTransaction(transaction);
+    public void addTransaction(String userId, String restId, String address, int foodPrice, int foodCount) throws SQLException {
+        transactionData.addTransaction(userId,restId,address,foodPrice,foodCount);
     }
 
     @Override
