@@ -330,7 +330,6 @@
                 listItem.innerHTML = htmlList;
                 addedItemsList.appendChild(listItem);
                 addedItems.pop();
-                updateCartCount();
             }
             flag = false;
         });
@@ -340,7 +339,7 @@
         const addedItemsList = document.getElementById("added-items");
         const cartCountSpan = document.getElementById("cart-count");
         const addedItems = addedItemsList.querySelectorAll(".added-to-cart-list");
-        cartCountSpan.textContent = addedItems.length+"";
+        cartCountSpan.textContent = addedItems.length;
     }
 
     // Call the function to update the count when the page loads or refreshes

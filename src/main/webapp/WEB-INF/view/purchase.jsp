@@ -80,41 +80,42 @@
     </style>
 </head>
 <body>
-<div class="container animate__animated animate__fadeInUp">
+<div class="container">
     <h1 class="animate__animated animate__fadeInDown">Order Form</h1>
-    <form:form action="${pageContext.request.contextPath}/purchase" cssClass="order-form animate__animated animate__fadeInUp" method="post">
-        <div class="form-group animate__animated animate__fadeInLeft">
+    <form:form action="${pageContext.request.contextPath}/purchase" cssClass="order-form" method="post">
+        <div class="form-group">
             <label for="address">Address:</label>
             <textarea class="form-control" name="address" id="address"></textarea>
         </div>
-        <div class="form-group animate__animated animate__fadeInRight">
+        <div class="form-group">
             <h2>Price:</h2>
             <p id="price">${resultPrice}</p>
         </div>
-        <div class="form-group animate__animated animate__fadeInLeft">
+        <div class="form-group">
             <h2>Count:</h2>
             <p id="count">${resultCount}</p>
         </div>
-        <input type="submit" value="Purchase" class="btn btn-success animate__animated animate__fadeInUp" />
+        <input type="submit" value="Purchase" class="btn btn-success" />
     </form:form>
 </div>
-<footer class="footer animate__animated animate__fadeInUp">
+<footer class="footer">
     <p>&copy; 2023 Restaurant Management. All rights reserved.</p>
 </footer>
 <script>
+
     const orderForm = document.querySelector(".order-form");
 
-    orderForm.addEventListener("submit", async function (event) {
+    orderForm.addEventListener("submit",async function (event) {
         event.preventDefault();
 
         const address = document.getElementById("address").value;
-        const resultPrice = document.getElementById("price").textContent + "";
-        const resultCount = document.getElementById("count").textContent + "";
+        const resultPrice = document.getElementById("price").textContent+"";
+        const resultCount = document.getElementById("count").textContent+"";
 
         try {
             const response = await fetch("${pageContext.request.contextPath}/purchase", {
                 method: "POST",
-                body: new URLSearchParams({address, resultPrice, resultCount}),
+                body: new URLSearchParams({address,resultPrice,resultCount}),
             });
 
             if (response.ok) {
@@ -132,6 +133,9 @@
         const form = document.querySelector("form");
         form.classList.add("animate__animated", "animate__fadeInUp");
     });
+
+
+
 </script>
 </body>
 </html>
